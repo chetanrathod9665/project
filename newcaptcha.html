@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colorful CAPTCHA Verification</title>
+    <style>
+        #captchaCanvas {
+            border: 1px solid #000;
+            margin-bottom: 10px;
+        }
+        #captchaInput {
+            margin-bottom: 10px;
+        }
+        #captchaMessage {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Colorful CAPTCHA Verification</h1>
+    <canvas id="captchaCanvas" width="200" height="50"></canvas>
+    <input type="text" id="captchaInput" placeholder="Enter the CAPTCHA">
+    <button onclick="validateCaptcha()">Submit</button>
+    <p id="captchaMessage"></p>
+
+    <script>
+        var captchaChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        var captchaLength = 6;
+
+        function generateCaptcha() {
+            var captchaCanvas = document.getElementById('captchaCanvas');
+            var ctx = captchaCanvas.getContext("2d");
+            var captcha = '';
+
+            // Generate random captcha text
+            for (var i = 0; i < captchaLength; i++) {
+                var randomChar = captchaChars.charAt(Math.floor(Math.random() * captchaChars.length));
+                captcha += randomChar;
+            }
+
+            // Clear previous captcha and style canvas
+            ctx.clearRect(0, 0, captchaCanvas.width, captchaCanvas.height);
+            ctx.font = "bold 30px Arial";
+            ctx.textBaseline = "middle";
+            ctx.textAlign = "center";
+            ctx.strokeStyle = getRandomColor();
+            ctx.strokeText(captcha, captchaCanvas.width / 2, captchaCanvas.height / 2);
+
+            // Store captcha in sessionStorage
+            sessionStorage.setItem('captcha', captcha);
+        }
+
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function validateCaptcha() {
+            var enteredCaptcha = document.getElementById('captchaInput').value;
+            var generatedCaptcha = sessionStorage.getItem('captcha');
+            var captchaMessage = document.getElementById('captchaMessage');
+
+            if (enteredCaptcha === generatedCaptcha) {
+                captchaMessage.innerHTML = "CAPTCHA verified successfully. Access granted.";
+                captchaMessage.style.color = "green";
+                generateCaptcha(); // Generate new CAPTCHA after successful validation
+            } else {
+                captchaMessage.innerHTML = "Invalid CAPTCHA. Access denied.";
+                captchaMessage.style.color = "red";
+                generateCaptcha(); // Refresh CAPTCHA
+            }
+        }
+
+        // Initial CAPTCHA generation
+        window.onload = generateCaptcha;
+    </script>
+</body>
+</html>

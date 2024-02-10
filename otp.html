@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+</head>
+<body>
+    <h1>OTP Verification</h1>
+    <form id="otpForm">
+        <label for="phoneNumber">Enter Phone Number:</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" required>
+        <button type="button" onclick="generateOTP()">Get OTP</button><br>
+
+        <label for="otp">Enter OTP:</label>
+        <input type="text" id="otp" name="otp" required>
+        <button type="button" onclick="verifyOTP()">Verify OTP</button><br>
+        
+        <p id="message"></p>
+    </form>
+
+    <script>
+        function generateOTP() {
+            var phoneNumber = document.getElementById('phoneNumber').value;
+            // Simulate generating OTP (6 digits)
+            var otp = Math.floor(100000 + Math.random() * 900000);
+            // Simulate sending OTP via SMS or email
+            alert("OTP sent to " + phoneNumber + ": " + otp);
+            sessionStorage.setItem('generatedOTP', otp);
+        }
+
+        function verifyOTP() {
+            var enteredOTP = document.getElementById('otp').value;
+            var generatedOTP = sessionStorage.getItem('generatedOTP');
+            if (enteredOTP === generatedOTP) {
+                document.getElementById('message').innerHTML = "OTP verified successfully. Access granted.";
+            } else {
+                document.getElementById('message').innerHTML = "Invalid OTP. Access denied.";
+            }
+        }
+    </script>
+</body>
+</html>

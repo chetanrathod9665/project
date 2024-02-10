@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scholarship Management Admin Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav {
+            background-color: #f4f4f4;
+            padding: 10px;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        section {
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .add-button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Scholarship Management Admin Page</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#scholarships">Scholarships</a></li>
+            <li><a href="#applications">Applications</a></li>
+            <!-- Add more navigation links as needed -->
+        </ul>
+    </nav>
+    <section id="scholarships">
+        <h2>Scholarships</h2>
+        <a class="add-button" href="#add-scholarship">Add Scholarship</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Deadline</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Scholarship data will be populated dynamically -->
+                <tr>
+                    <td>Scholarship 1</td>
+                    <td>Description of Scholarship 1</td>
+                    <td>January 31, 2025</td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </section>
+    <section id="applications">
+        <h2>Applications</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Scholarship Name</th>
+                    <th>Applicant Name</th>
+                    <th>Email</th>
+                    <th>Essay</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Application data will be populated dynamically -->
+                <tr>
+                    <td>Scholarship 1</td>
+                    <td>Chetan Rathod</td>
+                    <td>chetan@gmail.com</td>
+                    <td>Essay content...</td>
+                    <td>Pending</td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </section>
+    <!-- Add more sections as needed -->
+    <section id="add-scholarship">
+        <h2>Add Scholarship</h2>
+        <form>
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name"><br>
+            <label for="description">Description:</label><br>
+            <textarea id="description" name="description"></textarea><br>
+            <label for="deadline">Deadline:</label><br>
+            <input type="date" id="deadline" name="deadline"><br><br>
+            <input type="submit" value="Submit">
+        </form>
+    </section>
+</body>
+</html>

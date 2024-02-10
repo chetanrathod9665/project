@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - My Scholarship Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        header {
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            padding: 1em;
+        }
+
+        section {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+       
+
+        button:hover {
+            background-color: #1c87c9;
+            
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1em;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Register for My Scholarship Portal</h1>
+    </header>
+
+    <section>
+        <form action="register.php" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+           <label for="apllicantname">Applicant Name:</label>
+            <input type="text" id="applicantname" name="applicantname" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="confirmpassword">Confirm Password:</label>
+            <input type="password" id="confirmpassword" name="confirmpassword" required>
+            
+            <label for="mobileno">Mobile No:</label>
+            <input type="tel" id="mobileno" name="mobileno" required>
+
+            <h1>OTP Verification</h1>
+            <form id="otpForm">
+                <label for="phoneNumber">Enter Phone Number:</label>
+                <input type="text" id="phoneNumber" name="phoneNumber" required>
+                <button type="button" onclick="generateOTP()">Get OTP</button><br>
+        
+                <label for="otp">Enter OTP:</label>
+                <input type="text" id="otp" name="otp" required>
+                <button type="button" onclick="verifyOTP()">Verify OTP</button><br>
+                
+                <p id="message"></p>
+            </form>
+        <br>
+            <script>
+                function generateOTP() {
+                    var phoneNumber = document.getElementById('phoneNumber').value;
+                    // Simulate generating OTP (6 digits)
+                    var otp = Math.floor(100000 + Math.random() * 900000);
+                    // Simulate sending OTP via SMS or email
+                    alert("OTP sent to " + phoneNumber + ": " + otp);
+                    sessionStorage.setItem('generatedOTP', otp);
+                }
+        
+                function verifyOTP() {
+                    var enteredOTP = document.getElementById('otp').value;
+                    var generatedOTP = sessionStorage.getItem('generatedOTP');
+                    if (enteredOTP === generatedOTP) {
+                        document.getElementById('message').innerHTML = "OTP verified successfully. Access granted.";
+                    } else {
+                        document.getElementById('message').innerHTML = "Invalid OTP. Access denied.";
+                    }
+                }
+            </script>
+            <br>
+            <form id="captchaForm">
+                <label for="captcha">Enter the CAPTCHA:</label>
+                <input type="text" id="captcha" name="captcha" required>
+                <button type="button" onclick="validateCaptcha()">Submit</button><br>
+                
+                <canvas id="captchaCanvas" width="200" height="50"></canvas>
+                <button type="button" onclick="generateCaptcha()" style="background-color: darkorange; border-color: chartreuse;">Refresh CAPTCHA</button>
+                
+                <p id="message"></p>
+            </form>
+        
+            <script>
+                var captchaChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                var captchaLength = 6;
+        
+                function generateCaptcha() {
+                    var captchaCanvas = document.getElementById('captchaCanvas');
+                    var ctx = captchaCanvas.getContext("2d");
+                    var captcha = '';
+        
+                    // Clear previous captcha
+                    ctx.clearRect(0, 0, captchaCanvas.width, captchaCanvas.height);
+        
+                    // Generate random captcha text
+                    for (var i = 0; i < captchaLength; i++) {
+                        var randomChar = captchaChars.charAt(Math.floor(Math.random() * captchaChars.length));
+                        captcha += randomChar;
+                    }
+        
+                    // Draw captcha text on canvas
+                    ctx.font = "30px Arial";
+                    ctx.fillText(captcha, 10, 30);
+        
+                    // Store captcha in sessionStorage
+                    sessionStorage.setItem('captcha', captcha);
+                }
+        
+                function validateCaptcha() {
+                    var enteredCaptcha = document.getElementById('captcha').value;
+                    var generatedCaptcha = sessionStorage.getItem('captcha');
+                    if (enteredCaptcha === generatedCaptcha) {
+                        document.getElementById('message').innerHTML = "CAPTCHA verified successfully. Access granted.";
+                    } else {
+                        document.getElementById('message').innerHTML = "Invalid CAPTCHA. Access denied.";
+                        generateCaptcha(); // Refresh CAPTCHA
+                    }
+                }
+        
+                // Initial CAPTCHA generation
+                window.onload = generateCaptcha;
+            </script>
+<br>
+
+            <button type="submit" style="background-color: red; border-color: rgb(127, 255, 0);">Register</button>
+            <br>
+            <br>
+            <button type="reset">Reset</button>
+        </form>
+    </section>
+
+    <footer>
+        &copy; 2024 My Scholarship Portal. All rights reserved.
+    </footer>
+</Password:<>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scholarship Management</title>
+</head>
+<body>
+    <h1>Scholarship Management</h1>
+
+    <!-- Form to add a new scholarship -->
+    <h2>Add New Scholarship</h2>
+    <form action="/add_scholarship" method="POST">
+        <label for="name">Scholarship Name:</label><br>
+        <input type="text" id="name" name="name"><br>
+        <label for="criteria">Criteria:</label><br>
+        <input type="text" id="criteria" name="criteria"><br>
+        <button type="submit">Add Scholarship</button>
+    </form>
+
+    <hr>
+
+    <!-- Form to update an existing scholarship -->
+    <h2>Update Scholarship</h2>
+    <form action="/update_scholarship" method="POST">
+        <label for="id">Scholarship ID:</label><br>
+        <input type="number" id="id" name="id"><br>
+        <label for="new_name">New Scholarship Name:</label><br>
+        <input type="text" id="new_name" name="new_name"><br>
+        <label for="new_criteria">New Criteria:</label><br>
+        <input type="text" id="new_criteria" name="new_criteria"><br>
+        <button type="submit">Update Scholarship</button>
+    </form>
+
+    <hr>
+
+    <!-- Form to delete a scholarship -->
+    <h2>Delete Scholarship</h2>
+    <form action="/delete_scholarship" method="POST">
+        <label for="delete_id">Scholarship ID to Delete:</label><br>
+        <input type="number" id="delete_id" name="delete_id"><br>
+        <button type="submit">Delete Scholarship</button>
+    </form>
+</body>
+</html>

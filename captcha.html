@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAPTCHA Verification</title>
+</head>
+<body>
+    <h1>CAPTCHA Verification</h1>
+    <form id="captchaForm">
+        <label for="captcha">Enter the CAPTCHA:</label>
+        <input type="text" id="captcha" name="captcha" required>
+        <button type="button" onclick="validateCaptcha()">Submit</button><br>
+        
+        <canvas id="captchaCanvas" width="200" height="50"></canvas>
+        <button type="button" onclick="generateCaptcha()">Refresh CAPTCHA</button>
+        
+        <p id="message"></p>
+    </form>
+
+    <script>
+        var captchaChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        var captchaLength = 6;
+
+        function generateCaptcha() {
+            var captchaCanvas = document.getElementById('captchaCanvas');
+            var ctx = captchaCanvas.getContext("2d");
+            var captcha = '';
+
+            // Clear previous captcha
+            ctx.clearRect(0, 0, captchaCanvas.width, captchaCanvas.height);
+
+            // Generate random captcha text
+            for (var i = 0; i < captchaLength; i++) {
+                var randomChar = captchaChars.charAt(Math.floor(Math.random() * captchaChars.length));
+                captcha += randomChar;
+            }
+
+            // Draw captcha text on canvas
+            ctx.font = "30px Arial";
+            ctx.fillText(captcha, 10, 30);
+
+            // Store captcha in sessionStorage
+            sessionStorage.setItem('captcha', captcha);
+        }
+
+        function validateCaptcha() {
+            var enteredCaptcha = document.getElementById('captcha').value;
+            var generatedCaptcha = sessionStorage.getItem('captcha');
+            if (enteredCaptcha === generatedCaptcha) {
+                document.getElementById('message').innerHTML = "CAPTCHA verified successfully. Access granted.";
+            } else {
+                document.getElementById('message').innerHTML = "Invalid CAPTCHA. Access denied.";
+                generateCaptcha(); // Refresh CAPTCHA
+            }
+        }
+
+        // Initial CAPTCHA generation
+        window.onload = generateCaptcha;
+    </script>
+</body>
+</html>
